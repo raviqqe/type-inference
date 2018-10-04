@@ -16,7 +16,7 @@ func (n Number) Unify(t, tt *Type) error {
 		return nil
 	}
 
-	return newInferenceError("not a number", (*tt).Location())
+	return fallback(t, tt, "not a number")
 }
 
 // Location returns where the type is defined.
