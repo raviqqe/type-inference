@@ -18,3 +18,7 @@ func TestVariableUnify(t *testing.T) {
 		assert.Equal(t, ts[0], ts[1])
 	}
 }
+
+func TestVariableLocation(t *testing.T) {
+	assert.Equal(t, "foo", NewVariable("foo").Location())
+}

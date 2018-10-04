@@ -34,6 +34,10 @@ func TestFunctionUnifyError(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewFunction(nil, NewNumber(""), ""),
+			NewNumber(""),
+		},
+		{
+			NewFunction(nil, NewNumber(""), ""),
 			NewFunction(nil, NewFunction(nil, NewNumber(""), ""), ""),
 		},
 		{
