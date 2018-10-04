@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: golang
+    working_directory: /go/src/github.com/raviqqe/type-inference
+    steps:
+      - checkout
+      - run: go get -u github.com/alecthomas/gometalinter
+      - run: gometalinter --install
+      - run: go get -d -t ./...
+      - run: gometalinter ./...
+      - run: go build
+      - run: go test
+      - run: bash <(curl -s https://codecov.io/bash)
