@@ -49,6 +49,6 @@ func TestFunctionUnifyError(t *testing.T) {
 			NewFunction([]Type{NewFunction(nil, NewNumber(""), "")}, NewNumber(""), ""),
 		},
 	} {
-		assert.NotNil(t, ts[0].Unify(&ts[0], &ts[1]))
+		assert.Error(t, ts[0].Unify(&ts[0], &ts[1]))
 	}
 }

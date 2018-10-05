@@ -13,5 +13,5 @@ func TestUnify(t *testing.T) {
 
 func TestUnifyError(t *testing.T) {
 	tt, ttt := Type(NewNumber("")), Type(NewFunction(nil, NewNumber(""), ""))
-	assert.NotNil(t, Unify(&tt, &ttt))
+	assert.Error(t, Unify(&tt, &ttt))
 }

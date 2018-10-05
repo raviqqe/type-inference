@@ -7,7 +7,11 @@ import (
 )
 
 func TestNumberUnify(t *testing.T) {
-	for _, ts := range [][2]Type{{NewNumber(""), NewNumber("")}} {
-		assert.Nil(t, ts[0].Unify(&ts[0], &ts[1]))
-	}
+	tt, ttt := Type(NewNumber("")), Type(NewNumber(""))
+	assert.Nil(t, tt.Unify(&tt, &ttt))
+}
+
+func TestNumberUnifyError(t *testing.T) {
+	tt, ttt := Type(NewNumber("")), Type(NewFunction(nil, NewNumber(""), ""))
+	assert.Error(t, tt.Unify(&tt, &ttt))
 }
