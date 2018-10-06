@@ -6,16 +6,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNullUnify(t *testing.T) {
+func TestNullAccept(t *testing.T) {
 	tt, ttt := Type(NewNull("")), Type(NewNull(""))
-	assert.Nil(t, tt.Unify(ttt))
+	assert.Nil(t, tt.Accept(ttt))
 }
 
-func TestNullUnifyError(t *testing.T) {
+func TestNullAcceptError(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{NewNull(""), NewNumber("")},
 		{NewNumber(""), NewNull("")},
 	} {
-		assert.Error(t, ts[0].Unify(ts[1]))
+		assert.Error(t, ts[0].Accept(ts[1]))
 	}
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestFunctionUnify(t *testing.T) {
+func TestFunctionAccept(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewFunction(nil, NewNumber(""), ""),
@@ -25,11 +25,11 @@ func TestFunctionUnify(t *testing.T) {
 			NewFunction([]Type{NewVariable("")}, NewVariable(""), ""),
 		},
 	} {
-		assert.Nil(t, ts[0].Unify(ts[1]))
+		assert.Nil(t, ts[0].Accept(ts[1]))
 	}
 }
 
-func TestFunctionUnifyError(t *testing.T) {
+func TestFunctionAcceptError(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewFunction(nil, NewNumber(""), ""),
@@ -48,6 +48,6 @@ func TestFunctionUnifyError(t *testing.T) {
 			NewFunction([]Type{NewFunction(nil, NewNumber(""), "")}, NewNumber(""), ""),
 		},
 	} {
-		assert.Error(t, ts[0].Unify(ts[1]))
+		assert.Error(t, ts[0].Accept(ts[1]))
 	}
 }

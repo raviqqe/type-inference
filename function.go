@@ -12,15 +12,15 @@ func NewFunction(as []Type, r Type, l string) *Function {
 	return &Function{as, r, l}
 }
 
-// Unify unifies 2 types.
-func (f *Function) Unify(t Type) error {
+// Accept accepts another type.
+func (f *Function) Accept(t Type) error {
 	ff, ok := t.(*Function)
 
 	if !ok {
 		return fallback(f, t, "not a function")
-	} else if err := unifyMany(f.arguments, ff.arguments, "different number of arguments", ff.location); err != nil {
+	} else if err := acceptMany(f.arguments, ff.arguments, "different number of arguments", ff.location); err != nil {
 		return err
-	} else if err := f.result.Unify(ff.result); err != nil {
+	} else if err := f.result.Accept(ff.result); err != nil {
 		return err
 	}
 

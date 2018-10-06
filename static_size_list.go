@@ -11,17 +11,17 @@ func NewStaticSizeList(ts []Type, l string) *StaticSizeList {
 	return &StaticSizeList{ts, l}
 }
 
-// Unify unifies 2 types.
-func (l *StaticSizeList) Unify(t Type) error {
+// Accept accepts another type.
+func (l *StaticSizeList) Accept(t Type) error {
 	ll, ok := t.(List)
 
 	if !ok {
 		return fallback(l, t, "not a list")
 	} else if ll, ok := ll.(*DynamicSizeList); ok {
-		return ll.Unify(l)
+		return ll.Accept(l)
 	}
 
-	return unifyMany(
+	return acceptMany(
 		l.elements,
 		ll.(*StaticSizeList).elements,
 		"different number of elements",

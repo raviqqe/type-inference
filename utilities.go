@@ -5,16 +5,16 @@ func fallback(t, tt Type, m string) error {
 		return newInferenceError(m, tt.Location())
 	}
 
-	return tt.Unify(t)
+	return tt.Accept(t)
 }
 
-func unifyMany(ts, tts []Type, m, l string) error {
+func acceptMany(ts, tts []Type, m, l string) error {
 	if len(ts) != len(tts) {
 		return newInferenceError(m, l)
 	}
 
 	for i, t := range ts {
-		if err := t.Unify(tts[i]); err != nil {
+		if err := t.Accept(tts[i]); err != nil {
 			return err
 		}
 	}

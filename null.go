@@ -10,8 +10,8 @@ func NewNull(l string) Null {
 	return Null{l}
 }
 
-// Unify unifies 2 types.
-func (n Null) Unify(t Type) error {
+// Accept accepts another type.
+func (n Null) Accept(t Type) error {
 	if _, ok := t.(Null); ok {
 		return nil
 	}

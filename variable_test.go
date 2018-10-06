@@ -6,22 +6,22 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestVariableUnify(t *testing.T) {
+func TestVariableAccept(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{NewVariable(""), NewVariable("")},
 		{NewVariable(""), NewNumber("")},
 		{NewNumber(""), NewVariable("")},
 	} {
-		assert.Nil(t, ts[0].Unify(ts[1]))
+		assert.Nil(t, ts[0].Accept(ts[1]))
 	}
 }
 
-func TestVariableUnifyInferredType(t *testing.T) {
+func TestVariableAcceptInferredType(t *testing.T) {
 	tt, ttt := Type(NewVariable("")), Type(NewDynamicSizeList(NewVariable(""), ""))
 
-	assert.Nil(t, tt.Unify(ttt))
+	assert.Nil(t, tt.Accept(ttt))
 	assert.Equal(t, NewDynamicSizeList(NewVariable(""), ""), ttt)
-	assert.Nil(t, tt.Unify(NewDynamicSizeList(NewNumber(""), "")))
+	assert.Nil(t, tt.Accept(NewDynamicSizeList(NewNumber(""), "")))
 	assert.Equal(t, NewDynamicSizeList(&Variable{NewNumber(""), ""}, ""), ttt)
 }
 

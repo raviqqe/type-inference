@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestRecordObjectUnify(t *testing.T) {
+func TestRecordObjectAccept(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
@@ -29,11 +29,11 @@ func TestRecordObjectUnify(t *testing.T) {
 			NewVariable(""),
 		},
 	} {
-		assert.Nil(t, ts[0].Unify(ts[1]))
+		assert.Nil(t, ts[0].Accept(ts[1]))
 	}
 }
 
-func TestRecordObjectUnifyError(t *testing.T) {
+func TestRecordObjectAcceptError(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
@@ -48,7 +48,7 @@ func TestRecordObjectUnifyError(t *testing.T) {
 			NewRecordObject(map[string]Type{"bar": NewNumber("")}, ""),
 		},
 	} {
-		assert.Error(t, ts[0].Unify(ts[1]))
+		assert.Error(t, ts[0].Accept(ts[1]))
 	}
 }
 

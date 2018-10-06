@@ -2,6 +2,6 @@ package tinfer
 
 // Type is a type.
 type Type interface {
-	Unify(Type) error
+	Accept(Type) error
 	Location() string
 }

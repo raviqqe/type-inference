@@ -10,8 +10,8 @@ func NewBinary(l string) Binary {
 	return Binary{l}
 }
 
-// Unify unifies 2 types.
-func (b Binary) Unify(t Type) error {
+// Accept accepts another type.
+func (b Binary) Accept(t Type) error {
 	if _, ok := t.(Binary); ok {
 		return nil
 	}

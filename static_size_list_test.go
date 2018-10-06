@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestStaticSizeListUnify(t *testing.T) {
+func TestStaticSizeListAccept(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewStaticSizeList(nil, ""),
@@ -33,7 +33,7 @@ func TestStaticSizeListUnify(t *testing.T) {
 			NewDynamicSizeList(NewNumber(""), ""),
 		},
 	} {
-		assert.Nil(t, ts[0].Unify(ts[1]))
+		assert.Nil(t, ts[0].Accept(ts[1]))
 	}
 }
 

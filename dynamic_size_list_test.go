@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDynamicSizeListUnify(t *testing.T) {
+func TestDynamicSizeListAccept(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewDynamicSizeList(NewNumber(""), ""),
@@ -29,11 +29,11 @@ func TestDynamicSizeListUnify(t *testing.T) {
 			NewStaticSizeList([]Type{NewNumber(""), NewVariable("")}, ""),
 		},
 	} {
-		assert.Nil(t, ts[0].Unify(ts[1]))
+		assert.Nil(t, ts[0].Accept(ts[1]))
 	}
 }
 
-func TestDynamicSizeListUnifyError(t *testing.T) {
+func TestDynamicSizeListAcceptError(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewDynamicSizeList(NewNumber(""), ""),
@@ -44,7 +44,7 @@ func TestDynamicSizeListUnifyError(t *testing.T) {
 			NewStaticSizeList([]Type{NewNumber(""), NewDynamicSizeList(NewNumber(""), "")}, ""),
 		},
 	} {
-		assert.Error(t, ts[0].Unify(ts[1]))
+		assert.Error(t, ts[0].Accept(ts[1]))
 	}
 }
 

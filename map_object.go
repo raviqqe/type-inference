@@ -11,15 +11,15 @@ func NewMapObject(t Type, l string) *MapObject {
 	return &MapObject{t, l}
 }
 
-// Unify unifies 2 types.
-func (o *MapObject) Unify(t Type) error {
+// Accept accepts another type.
+func (o *MapObject) Accept(t Type) error {
 	oo, ok := t.(Object)
 
 	if !ok {
 		return fallback(o, t, "not an object")
 	} else if oo, ok := oo.(*RecordObject); ok {
 		for _, kv := range oo.keyValues {
-			if err := o.value.Unify(kv.value); err != nil {
+			if err := o.value.Accept(kv.value); err != nil {
 				return err
 			}
 		}
@@ -27,7 +27,7 @@ func (o *MapObject) Unify(t Type) error {
 		return nil
 	}
 
-	return o.value.Unify(oo.(*MapObject).value)
+	return o.value.Accept(oo.(*MapObject).value)
 }
 
 // Location returns where the type is defined.

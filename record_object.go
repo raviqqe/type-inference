@@ -33,17 +33,17 @@ func NewRecordObject(m map[string]Type, l string) *RecordObject {
 	return &RecordObject{kvs, l}
 }
 
-// Unify unifies 2 types.
-func (o *RecordObject) Unify(t Type) error {
+// Accept accepts another type.
+func (o *RecordObject) Accept(t Type) error {
 	oo, ok := t.(Object)
 
 	if !ok {
 		return fallback(o, t, "not an object")
 	} else if oo, ok := oo.(*MapObject); ok {
-		return oo.Unify(t)
+		return oo.Accept(t)
 	}
 
-	return o.unifyRecordObject(oo.(*RecordObject))
+	return o.acceptRecordObject(oo.(*RecordObject))
 }
 
 // Location returns where the type is defined.
@@ -77,17 +77,17 @@ func (o RecordObject) keys() []string {
 	return ks
 }
 
-func (o *RecordObject) unifyRecordObject(oo *RecordObject) error {
+func (o *RecordObject) acceptRecordObject(oo *RecordObject) error {
 	if !o.contain(oo) && !oo.contain(o) {
 		return newInferenceError("not a compatible object", oo.Location())
 	} else if !o.contain(oo) && oo.contain(o) {
-		return oo.unifyRecordObject(o)
+		return oo.acceptRecordObject(o)
 	}
 
 	for _, kv1 := range o.keyValues {
 		for _, kv2 := range oo.keyValues {
 			if kv1.key == kv2.key {
-				if err := kv1.value.Unify(kv2.value); err != nil {
+				if err := kv1.value.Accept(kv2.value); err != nil {
 					return err
 				}
 			}

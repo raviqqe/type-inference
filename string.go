@@ -10,8 +10,8 @@ func NewString(l string) String {
 	return String{l}
 }
 
-// Unify unifies 2 types.
-func (s String) Unify(t Type) error {
+// Accept accepts another type.
+func (s String) Accept(t Type) error {
 	if _, ok := t.(String); ok {
 		return nil
 	}

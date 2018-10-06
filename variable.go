@@ -11,10 +11,10 @@ func NewVariable(l string) *Variable {
 	return &Variable{nil, l}
 }
 
-// Unify unifies 2 types.
-func (v *Variable) Unify(t Type) error {
+// Accept accepts another type.
+func (v *Variable) Accept(t Type) error {
 	if v.inferredType != nil {
-		return v.inferredType.Unify(t)
+		return v.inferredType.Accept(t)
 	}
 
 	v.inferredType = t
