@@ -11,12 +11,12 @@ func NewString(l string) String {
 }
 
 // Unify unifies 2 types.
-func (String) Unify(t, tt *Type) error {
-	if _, ok := (*tt).(String); ok {
+func (s String) Unify(t Type) error {
+	if _, ok := t.(String); ok {
 		return nil
 	}
 
-	return fallback(t, tt, "not a number")
+	return fallback(s, t, "not a number")
 }
 
 // Location returns where the type is defined.

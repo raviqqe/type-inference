@@ -8,7 +8,7 @@ import (
 
 func TestStringUnify(t *testing.T) {
 	tt, ttt := Type(NewString("")), Type(NewString(""))
-	assert.Nil(t, tt.Unify(&tt, &ttt))
+	assert.Nil(t, tt.Unify(ttt))
 }
 
 func TestStringUnifyError(t *testing.T) {
@@ -16,6 +16,6 @@ func TestStringUnifyError(t *testing.T) {
 		{NewString(""), NewNumber("")},
 		{NewNumber(""), NewString("")},
 	} {
-		assert.Error(t, ts[0].Unify(&ts[0], &ts[1]))
+		assert.Error(t, ts[0].Unify(ts[1]))
 	}
 }

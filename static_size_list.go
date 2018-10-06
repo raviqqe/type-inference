@@ -12,13 +12,13 @@ func NewStaticSizeList(ts []Type, l string) *StaticSizeList {
 }
 
 // Unify unifies 2 types.
-func (l *StaticSizeList) Unify(t, tt *Type) error {
-	ll, ok := (*tt).(List)
+func (l *StaticSizeList) Unify(t Type) error {
+	ll, ok := t.(List)
 
 	if !ok {
-		return fallback(t, tt, "not a list")
+		return fallback(l, t, "not a list")
 	} else if ll, ok := ll.(*DynamicSizeList); ok {
-		return ll.Unify(tt, t)
+		return ll.Unify(l)
 	}
 
 	return unifyMany(
@@ -30,7 +30,7 @@ func (l *StaticSizeList) Unify(t, tt *Type) error {
 }
 
 // Location returns where the type is defined.
-func (l *StaticSizeList) Location() string {
+func (l StaticSizeList) Location() string {
 	return l.location
 }
 

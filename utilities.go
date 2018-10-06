@@ -1,13 +1,11 @@
 package tinfer
 
-func fallback(t, tt *Type, m string) error {
-	if _, ok := (*tt).(Variable); !ok {
-		return newInferenceError(m, (*tt).Location())
+func fallback(t, tt Type, m string) error {
+	if _, ok := tt.(*Variable); !ok {
+		return newInferenceError(m, tt.Location())
 	}
 
-	*tt = *t
-
-	return nil
+	return tt.Unify(t)
 }
 
 func unifyMany(ts, tts []Type, m, l string) error {
@@ -16,7 +14,7 @@ func unifyMany(ts, tts []Type, m, l string) error {
 	}
 
 	for i, t := range ts {
-		if err := t.Unify(&ts[i], &tts[i]); err != nil {
+		if err := t.Unify(tts[i]); err != nil {
 			return err
 		}
 	}

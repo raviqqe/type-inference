@@ -29,8 +29,7 @@ func TestRecordObjectUnify(t *testing.T) {
 			NewVariable(""),
 		},
 	} {
-		assert.Nil(t, ts[0].Unify(&ts[0], &ts[1]))
-		assert.Equal(t, ts[0], ts[1])
+		assert.Nil(t, ts[0].Unify(ts[1]))
 	}
 }
 
@@ -44,8 +43,12 @@ func TestRecordObjectUnifyError(t *testing.T) {
 			NewNumber(""),
 			NewRecordObject(map[string]Type{"foo": NewString("")}, ""),
 		},
+		{
+			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
+			NewRecordObject(map[string]Type{"bar": NewNumber("")}, ""),
+		},
 	} {
-		assert.Error(t, ts[0].Unify(&ts[0], &ts[1]))
+		assert.Error(t, ts[0].Unify(ts[1]))
 	}
 }
 

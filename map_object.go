@@ -12,24 +12,22 @@ func NewMapObject(t Type, l string) *MapObject {
 }
 
 // Unify unifies 2 types.
-func (o *MapObject) Unify(t, tt *Type) error {
-	oo, ok := (*tt).(Object)
+func (o *MapObject) Unify(t Type) error {
+	oo, ok := t.(Object)
 
 	if !ok {
-		return fallback(t, tt, "not an object")
+		return fallback(o, t, "not an object")
 	} else if oo, ok := oo.(*RecordObject); ok {
 		for _, kv := range oo.keyValues {
-			if err := o.value.Unify(&o.value, &kv.value); err != nil {
+			if err := o.value.Unify(kv.value); err != nil {
 				return err
 			}
 		}
 
-		*tt = *t
-
 		return nil
 	}
 
-	return o.value.Unify(&o.value, &oo.(*MapObject).value)
+	return o.value.Unify(oo.(*MapObject).value)
 }
 
 // Location returns where the type is defined.

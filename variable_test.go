@@ -12,11 +12,17 @@ func TestVariableUnify(t *testing.T) {
 		{NewVariable(""), NewNumber("")},
 		{NewNumber(""), NewVariable("")},
 	} {
-		err := ts[0].Unify(&ts[0], &ts[1])
-
-		assert.Nil(t, err)
-		assert.Equal(t, ts[0], ts[1])
+		assert.Nil(t, ts[0].Unify(ts[1]))
 	}
+}
+
+func TestVariableUnifyInferredType(t *testing.T) {
+	tt, ttt := Type(NewVariable("")), Type(NewDynamicSizeList(NewVariable(""), ""))
+
+	assert.Nil(t, tt.Unify(ttt))
+	assert.Equal(t, NewDynamicSizeList(NewVariable(""), ""), ttt)
+	assert.Nil(t, tt.Unify(NewDynamicSizeList(NewNumber(""), "")))
+	assert.Equal(t, NewDynamicSizeList(&Variable{NewNumber(""), ""}, ""), ttt)
 }
 
 func TestVariableLocation(t *testing.T) {

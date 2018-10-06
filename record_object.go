@@ -34,16 +34,16 @@ func NewRecordObject(m map[string]Type, l string) *RecordObject {
 }
 
 // Unify unifies 2 types.
-func (o *RecordObject) Unify(t, tt *Type) error {
-	oo, ok := (*tt).(Object)
+func (o *RecordObject) Unify(t Type) error {
+	oo, ok := t.(Object)
 
 	if !ok {
-		return fallback(t, tt, "not an object")
+		return fallback(o, t, "not an object")
 	} else if oo, ok := oo.(*MapObject); ok {
-		return oo.Unify(tt, t)
+		return oo.Unify(t)
 	}
 
-	return unifyRecordObjects(o, oo.(*RecordObject), t, tt)
+	return o.unifyRecordObject(oo.(*RecordObject))
 }
 
 // Location returns where the type is defined.
@@ -77,24 +77,22 @@ func (o RecordObject) keys() []string {
 	return ks
 }
 
-func unifyRecordObjects(o, oo *RecordObject, t, tt *Type) error {
+func (o *RecordObject) unifyRecordObject(oo *RecordObject) error {
 	if !o.contain(oo) && !oo.contain(o) {
 		return newInferenceError("not a compatible object", oo.Location())
 	} else if !o.contain(oo) && oo.contain(o) {
-		return unifyRecordObjects(oo, o, tt, t)
+		return oo.unifyRecordObject(o)
 	}
 
 	for _, kv1 := range o.keyValues {
 		for _, kv2 := range oo.keyValues {
 			if kv1.key == kv2.key {
-				if err := kv1.value.Unify(&kv1.value, &kv2.value); err != nil {
+				if err := kv1.value.Unify(kv2.value); err != nil {
 					return err
 				}
 			}
 		}
 	}
-
-	*t = *tt
 
 	return nil
 }

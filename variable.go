@@ -2,17 +2,23 @@ package tinfer
 
 // Variable is a type variable.
 type Variable struct {
-	location string
+	inferredType Type
+	location     string
 }
 
 // NewVariable creates a new variable.
-func NewVariable(l string) Variable {
-	return Variable{l}
+func NewVariable(l string) *Variable {
+	return &Variable{nil, l}
 }
 
 // Unify unifies 2 types.
-func (Variable) Unify(t, tt *Type) error {
-	*t = *tt
+func (v *Variable) Unify(t Type) error {
+	if v.inferredType != nil {
+		return v.inferredType.Unify(t)
+	}
+
+	v.inferredType = t
+
 	return nil
 }
 

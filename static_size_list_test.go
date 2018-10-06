@@ -33,8 +33,7 @@ func TestStaticSizeListUnify(t *testing.T) {
 			NewDynamicSizeList(NewNumber(""), ""),
 		},
 	} {
-		assert.Nil(t, ts[0].Unify(&ts[0], &ts[1]))
-		assert.Equal(t, ts[0], ts[1])
+		assert.Nil(t, ts[0].Unify(ts[1]))
 	}
 }
 

@@ -25,8 +25,7 @@ func TestFunctionUnify(t *testing.T) {
 			NewFunction([]Type{NewVariable("")}, NewVariable(""), ""),
 		},
 	} {
-		assert.Nil(t, ts[0].Unify(&ts[0], &ts[1]))
-		assert.Equal(t, ts[0], ts[1])
+		assert.Nil(t, ts[0].Unify(ts[1]))
 	}
 }
 
@@ -49,6 +48,6 @@ func TestFunctionUnifyError(t *testing.T) {
 			NewFunction([]Type{NewFunction(nil, NewNumber(""), "")}, NewNumber(""), ""),
 		},
 	} {
-		assert.Error(t, ts[0].Unify(&ts[0], &ts[1]))
+		assert.Error(t, ts[0].Unify(ts[1]))
 	}
 }

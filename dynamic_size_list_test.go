@@ -29,8 +29,7 @@ func TestDynamicSizeListUnify(t *testing.T) {
 			NewStaticSizeList([]Type{NewNumber(""), NewVariable("")}, ""),
 		},
 	} {
-		assert.Nil(t, ts[0].Unify(&ts[0], &ts[1]))
-		assert.Equal(t, ts[0], ts[1])
+		assert.Nil(t, ts[0].Unify(ts[1]))
 	}
 }
 
@@ -45,7 +44,7 @@ func TestDynamicSizeListUnifyError(t *testing.T) {
 			NewStaticSizeList([]Type{NewNumber(""), NewDynamicSizeList(NewNumber(""), "")}, ""),
 		},
 	} {
-		assert.Error(t, ts[0].Unify(&ts[0], &ts[1]))
+		assert.Error(t, ts[0].Unify(ts[1]))
 	}
 }
 

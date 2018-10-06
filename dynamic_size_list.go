@@ -12,24 +12,22 @@ func NewDynamicSizeList(t Type, l string) *DynamicSizeList {
 }
 
 // Unify unifies 2 types.
-func (l *DynamicSizeList) Unify(t, tt *Type) error {
-	ll, ok := (*tt).(List)
+func (l *DynamicSizeList) Unify(t Type) error {
+	ll, ok := t.(List)
 
 	if !ok {
-		return fallback(t, tt, "not a list")
+		return fallback(l, t, "not a list")
 	} else if ll, ok := ll.(*StaticSizeList); ok {
 		for _, e := range ll.elements {
-			if err := l.element.Unify(&l.element, &e); err != nil {
+			if err := l.element.Unify(e); err != nil {
 				return err
 			}
 		}
 
-		*tt = l
-
 		return nil
 	}
 
-	return l.element.Unify(&l.element, &ll.(*DynamicSizeList).element)
+	return l.element.Unify(ll.(*DynamicSizeList).element)
 }
 
 // Location returns where the type is defined.

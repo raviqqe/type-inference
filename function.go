@@ -13,14 +13,14 @@ func NewFunction(as []Type, r Type, l string) *Function {
 }
 
 // Unify unifies 2 types.
-func (f *Function) Unify(t, tt *Type) error {
-	ff, ok := (*tt).(*Function)
+func (f *Function) Unify(t Type) error {
+	ff, ok := t.(*Function)
 
 	if !ok {
-		return fallback(t, tt, "not a function")
+		return fallback(f, t, "not a function")
 	} else if err := unifyMany(f.arguments, ff.arguments, "different number of arguments", ff.location); err != nil {
 		return err
-	} else if err := f.result.Unify(&f.result, &ff.result); err != nil {
+	} else if err := f.result.Unify(ff.result); err != nil {
 		return err
 	}
 
