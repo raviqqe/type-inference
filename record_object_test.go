@@ -17,14 +17,6 @@ func TestRecordObjectAccept(t *testing.T) {
 			NewRecordObject(map[string]Type{"foo": NewNumber(""), "bar": NewString("")}, ""),
 		},
 		{
-			NewRecordObject(map[string]Type{"foo": NewNumber(""), "bar": NewString("")}, ""),
-			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
-		},
-		{
-			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
-			NewMapObject(NewNumber(""), ""),
-		},
-		{
 			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
 			NewVariable(""),
 		},
@@ -46,6 +38,14 @@ func TestRecordObjectAcceptError(t *testing.T) {
 		{
 			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
 			NewRecordObject(map[string]Type{"bar": NewNumber("")}, ""),
+		},
+		{
+			NewRecordObject(map[string]Type{"foo": NewNumber(""), "bar": NewString("")}, ""),
+			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
+		},
+		{
+			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
+			NewMapObject(NewNumber(""), ""),
 		},
 	} {
 		assert.Error(t, ts[0].Accept(ts[1]))

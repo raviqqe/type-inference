@@ -35,15 +35,25 @@ func NewRecordObject(m map[string]Type, l string) *RecordObject {
 
 // Accept accepts another type.
 func (o *RecordObject) Accept(t Type) error {
-	oo, ok := t.(Object)
+	oo, ok := t.(*RecordObject)
 
 	if !ok {
-		return fallback(o, t, "not an object")
-	} else if oo, ok := oo.(*MapObject); ok {
-		return oo.Accept(t)
+		return fallback(o, t, "not an record object")
+	} else if !o.contain(oo) {
+		return newInferenceError("not a compatible record object", oo.Location())
 	}
 
-	return o.acceptRecordObject(oo.(*RecordObject))
+	for _, kv1 := range o.keyValues {
+		for _, kv2 := range oo.keyValues {
+			if kv1.key == kv2.key {
+				if err := kv1.value.Accept(kv2.value); err != nil {
+					return err
+				}
+			}
+		}
+	}
+
+	return nil
 }
 
 // Location returns where the type is defined.
@@ -75,24 +85,4 @@ func (o RecordObject) keys() []string {
 	}
 
 	return ks
-}
-
-func (o *RecordObject) acceptRecordObject(oo *RecordObject) error {
-	if !o.contain(oo) && !oo.contain(o) {
-		return newInferenceError("not a compatible object", oo.Location())
-	} else if !o.contain(oo) && oo.contain(o) {
-		return oo.acceptRecordObject(o)
-	}
-
-	for _, kv1 := range o.keyValues {
-		for _, kv2 := range oo.keyValues {
-			if kv1.key == kv2.key {
-				if err := kv1.value.Accept(kv2.value); err != nil {
-					return err
-				}
-			}
-		}
-	}
-
-	return nil
 }
