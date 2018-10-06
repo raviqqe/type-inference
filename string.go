@@ -1,11 +1,11 @@
 package tinfer
 
-// String is a number type.
+// String is a string type.
 type String struct {
 	location string
 }
 
-// NewString creates a new number type.
+// NewString creates a new string type.
 func NewString(l string) String {
 	return String{l}
 }
@@ -16,7 +16,7 @@ func (s String) Unify(t Type) error {
 		return nil
 	}
 
-	return fallback(s, t, "not a number")
+	return fallback(s, t, "not a string")
 }
 
 // Location returns where the type is defined.
