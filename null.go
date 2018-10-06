@@ -11,15 +11,15 @@ func NewNull(l string) Null {
 }
 
 // Unify unifies 2 types.
-func (s Null) Unify(t Type) error {
+func (n Null) Unify(t Type) error {
 	if _, ok := t.(Null); ok {
 		return nil
 	}
 
-	return fallback(s, t, "not a null")
+	return fallback(n, t, "not a null")
 }
 
 // Location returns where the type is defined.
-func (s Null) Location() string {
-	return s.location
+func (n Null) Location() string {
+	return n.location
 }
