@@ -27,6 +27,7 @@ func TestVariableAcceptInferredType(t *testing.T) {
 func TestVariableCanAccept(t *testing.T) {
 	assert.True(t, NewVariable("").CanAccept(NewVariable("")))
 	assert.True(t, NewVariable("").CanAccept(NewNumber("")))
+	assert.False(t, Variable{NewString(""), ""}.CanAccept(NewNumber("")))
 }
 
 func TestVariableLocation(t *testing.T) {

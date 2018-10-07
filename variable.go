@@ -23,7 +23,11 @@ func (v *Variable) Accept(t Type) error {
 }
 
 // CanAccept checks if a type is acceptable.
-func (Variable) CanAccept(t Type) bool {
+func (v Variable) CanAccept(t Type) bool {
+	if v.inferredType != nil {
+		return v.inferredType.CanAccept(t)
+	}
+
 	return true
 }
 
