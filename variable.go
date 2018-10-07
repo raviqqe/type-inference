@@ -22,6 +22,11 @@ func (v *Variable) Accept(t Type) error {
 	return nil
 }
 
+// CanAccept checks if a type is acceptable.
+func (Variable) CanAccept(t Type) bool {
+	return true
+}
+
 // Location returns where the type is defined.
 func (v Variable) Location() string {
 	return v.location

@@ -19,6 +19,12 @@ func (n Null) Accept(t Type) error {
 	return newInferenceError("not a null", t.Location())
 }
 
+// CanAccept checks if a type is acceptable.
+func (Null) CanAccept(t Type) bool {
+	_, ok := t.(Null)
+	return ok
+}
+
 // Location returns where the type is defined.
 func (n Null) Location() string {
 	return n.location

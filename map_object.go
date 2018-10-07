@@ -30,6 +30,24 @@ func (o *MapObject) Accept(t Type) error {
 	return o.value.Accept(oo.(*MapObject).value)
 }
 
+// CanAccept checks if a type is acceptable.
+func (o *MapObject) CanAccept(t Type) bool {
+	switch oo := t.(type) {
+	case *MapObject:
+		return o.value.CanAccept(oo.value)
+	case *RecordObject:
+		for _, kv := range oo.keyValues {
+			if !o.value.CanAccept(kv.value) {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	return false
+}
+
 // Location returns where the type is defined.
 func (o *MapObject) Location() string {
 	return o.location

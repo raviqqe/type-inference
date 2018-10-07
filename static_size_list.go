@@ -35,6 +35,34 @@ func (l *StaticSizeList) Accept(t Type) error {
 	)
 }
 
+// CanAccept checks if a type is acceptable.
+func (l StaticSizeList) CanAccept(t Type) bool {
+	switch ll := t.(type) {
+	case *DynamicSizeList:
+		for _, t := range l.elements {
+			if !t.CanAccept(ll.element) {
+				return false
+			}
+		}
+
+		return true
+	case *StaticSizeList:
+		if len(l.elements) != len(ll.elements) {
+			return false
+		}
+
+		for i, t := range l.elements {
+			if !t.CanAccept(ll.elements[i]) {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	return false
+}
+
 // Location returns where the type is defined.
 func (l StaticSizeList) Location() string {
 	return l.location

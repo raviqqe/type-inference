@@ -18,16 +18,35 @@ func (f *Function) Accept(t Type) error {
 
 	if !ok {
 		return newInferenceError("not a function", t.Location())
-	} else if err := acceptMany(f.arguments, ff.arguments, "different number of arguments", ff.location); err != nil {
-		return err
-	} else if err := f.result.Accept(ff.result); err != nil {
+	} else if err := acceptMany(ff.arguments, f.arguments, "different number of arguments", ff.location); err != nil {
 		return err
 	}
 
-	return nil
+	return f.result.Accept(ff.result)
+}
+
+// CanAccept checks if a type is acceptable.
+func (f Function) CanAccept(t Type) bool {
+	ff, ok := t.(*Function)
+
+	if !ok {
+		return false
+	} else if len(f.arguments) != len(ff.arguments) {
+		return false
+	}
+
+	for i, t := range f.arguments {
+		// contravariance check
+		if !ff.arguments[i].CanAccept(t) {
+			return false
+		}
+	}
+
+	// covariance check
+	return f.result.CanAccept(ff.result)
 }
 
 // Location returns where the type is defined.
-func (f *Function) Location() string {
+func (f Function) Location() string {
 	return f.location
 }

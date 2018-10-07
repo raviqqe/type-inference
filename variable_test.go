@@ -24,6 +24,11 @@ func TestVariableAcceptInferredType(t *testing.T) {
 	assert.Equal(t, NewDynamicSizeList(&Variable{NewNumber(""), ""}, ""), ttt)
 }
 
+func TestVariableCanAccept(t *testing.T) {
+	assert.True(t, NewVariable("").CanAccept(NewVariable("")))
+	assert.True(t, NewVariable("").CanAccept(NewNumber("")))
+}
+
 func TestVariableLocation(t *testing.T) {
 	assert.Equal(t, "foo", NewVariable("foo").Location())
 }

@@ -56,6 +56,29 @@ func (o *RecordObject) Accept(t Type) error {
 	return nil
 }
 
+// CanAccept checks if a type is acceptable.
+func (o *RecordObject) CanAccept(t Type) bool {
+	oo, ok := t.(*RecordObject)
+
+	if !ok {
+		return false
+	} else if !o.contain(oo) {
+		return false
+	}
+
+	for _, kv1 := range o.keyValues {
+		for _, kv2 := range oo.keyValues {
+			if kv1.key == kv2.key {
+				if !kv1.value.CanAccept(kv2.value) {
+					return false
+				}
+			}
+		}
+	}
+
+	return true
+}
+
 // Location returns where the type is defined.
 func (o RecordObject) Location() string {
 	return o.location

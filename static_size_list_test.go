@@ -30,6 +30,7 @@ func TestStaticSizeListAccept(t *testing.T) {
 		},
 	} {
 		assert.Nil(t, ts[0].Accept(ts[1]))
+		assert.True(t, ts[0].CanAccept(ts[1]))
 	}
 }
 
@@ -57,6 +58,7 @@ func TestStaticSizeListAcceptError(t *testing.T) {
 		},
 	} {
 		assert.Error(t, ts[0].Accept(ts[1]))
+		assert.False(t, ts[0].CanAccept(ts[1]))
 	}
 }
 

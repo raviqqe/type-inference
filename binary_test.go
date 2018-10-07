@@ -19,3 +19,8 @@ func TestBinaryAcceptError(t *testing.T) {
 		assert.Error(t, ts[0].Accept(ts[1]))
 	}
 }
+
+func TestBinaryCanAccept(t *testing.T) {
+	assert.True(t, NewBinary("").CanAccept(NewBinary("")))
+	assert.False(t, NewBinary("").CanAccept(NewNumber("")))
+}

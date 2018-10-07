@@ -19,6 +19,12 @@ func (s String) Accept(t Type) error {
 	return newInferenceError("not a string", t.Location())
 }
 
+// CanAccept checks if a type is acceptable.
+func (String) CanAccept(t Type) bool {
+	_, ok := t.(String)
+	return ok
+}
+
 // Location returns where the type is defined.
 func (s String) Location() string {
 	return s.location

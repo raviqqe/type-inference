@@ -19,3 +19,8 @@ func TestNullAcceptError(t *testing.T) {
 		assert.Error(t, ts[0].Accept(ts[1]))
 	}
 }
+
+func TestNullCanAccept(t *testing.T) {
+	assert.True(t, NewNull("").CanAccept(NewNull("")))
+	assert.False(t, NewNull("").CanAccept(NewNumber("")))
+}

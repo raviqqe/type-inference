@@ -19,3 +19,8 @@ func TestStringAcceptError(t *testing.T) {
 		assert.Error(t, ts[0].Accept(ts[1]))
 	}
 }
+
+func TestStringCanAccept(t *testing.T) {
+	assert.True(t, NewString("").CanAccept(NewString("")))
+	assert.False(t, NewString("").CanAccept(NewNumber("")))
+}

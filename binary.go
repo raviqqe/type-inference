@@ -19,6 +19,12 @@ func (b Binary) Accept(t Type) error {
 	return newInferenceError("not a binary", t.Location())
 }
 
+// CanAccept checks if a type is acceptable.
+func (Binary) CanAccept(t Type) bool {
+	_, ok := t.(Binary)
+	return ok
+}
+
 // Location returns where the type is defined.
 func (b Binary) Location() string {
 	return b.location
