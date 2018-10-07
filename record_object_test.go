@@ -16,10 +16,6 @@ func TestRecordObjectAccept(t *testing.T) {
 			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
 			NewRecordObject(map[string]Type{"foo": NewNumber(""), "bar": NewString("")}, ""),
 		},
-		{
-			NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
-			NewVariable(""),
-		},
 	} {
 		assert.Nil(t, ts[0].Accept(ts[1]))
 	}

@@ -16,7 +16,7 @@ func (l *DynamicSizeList) Accept(t Type) error {
 	ll, ok := t.(List)
 
 	if !ok {
-		return fallback(l, t, "not a list")
+		return newInferenceError("not a list", t.Location())
 	} else if ll, ok := ll.(*StaticSizeList); ok {
 		for _, e := range ll.elements {
 			if err := l.element.Accept(e); err != nil {

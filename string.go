@@ -16,7 +16,7 @@ func (s String) Accept(t Type) error {
 		return nil
 	}
 
-	return fallback(s, t, "not a string")
+	return newInferenceError("not a string", t.Location())
 }
 
 // Location returns where the type is defined.

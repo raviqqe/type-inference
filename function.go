@@ -17,7 +17,7 @@ func (f *Function) Accept(t Type) error {
 	ff, ok := t.(*Function)
 
 	if !ok {
-		return fallback(f, t, "not a function")
+		return newInferenceError("not a function", t.Location())
 	} else if err := acceptMany(f.arguments, ff.arguments, "different number of arguments", ff.location); err != nil {
 		return err
 	} else if err := f.result.Accept(ff.result); err != nil {

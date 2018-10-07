@@ -16,7 +16,7 @@ func (b Binary) Accept(t Type) error {
 		return nil
 	}
 
-	return fallback(b, t, "not a binary")
+	return newInferenceError("not a binary", t.Location())
 }
 
 // Location returns where the type is defined.

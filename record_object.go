@@ -38,7 +38,7 @@ func (o *RecordObject) Accept(t Type) error {
 	oo, ok := t.(*RecordObject)
 
 	if !ok {
-		return fallback(o, t, "not an record object")
+		return newInferenceError("not an record object", t.Location())
 	} else if !o.contain(oo) {
 		return newInferenceError("not a compatible record object", oo.Location())
 	}

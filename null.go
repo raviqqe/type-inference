@@ -16,7 +16,7 @@ func (n Null) Accept(t Type) error {
 		return nil
 	}
 
-	return fallback(n, t, "not a null")
+	return newInferenceError("not a null", t.Location())
 }
 
 // Location returns where the type is defined.

@@ -16,9 +16,15 @@ func (l *StaticSizeList) Accept(t Type) error {
 	ll, ok := t.(List)
 
 	if !ok {
-		return fallback(l, t, "not a list")
+		return newInferenceError("not a list", t.Location())
 	} else if ll, ok := ll.(*DynamicSizeList); ok {
-		return ll.Accept(l)
+		for _, e := range l.elements {
+			if err := e.Accept(ll.element); err != nil {
+				return err
+			}
+		}
+
+		return nil
 	}
 
 	return acceptMany(

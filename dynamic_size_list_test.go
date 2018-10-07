@@ -13,8 +13,8 @@ func TestDynamicSizeListAccept(t *testing.T) {
 			NewDynamicSizeList(NewNumber(""), ""),
 		},
 		{
-			NewDynamicSizeList(NewNumber(""), ""),
 			NewDynamicSizeList(NewVariable(""), ""),
+			NewDynamicSizeList(NewNumber(""), ""),
 		},
 		{
 			NewDynamicSizeList(NewDynamicSizeList(NewVariable(""), ""), ""),
@@ -25,8 +25,8 @@ func TestDynamicSizeListAccept(t *testing.T) {
 			NewStaticSizeList([]Type{NewNumber("")}, ""),
 		},
 		{
-			NewDynamicSizeList(NewNumber(""), ""),
 			NewStaticSizeList([]Type{NewNumber(""), NewVariable("")}, ""),
+			NewDynamicSizeList(NewNumber(""), ""),
 		},
 	} {
 		assert.Nil(t, ts[0].Accept(ts[1]))
@@ -36,12 +36,20 @@ func TestDynamicSizeListAccept(t *testing.T) {
 func TestDynamicSizeListAcceptError(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
+			NewNumber(""),
+			NewDynamicSizeList(NewNumber(""), ""),
+		},
+		{
 			NewDynamicSizeList(NewNumber(""), ""),
 			NewNumber(""),
 		},
 		{
 			NewDynamicSizeList(NewNumber(""), ""),
 			NewStaticSizeList([]Type{NewNumber(""), NewDynamicSizeList(NewNumber(""), "")}, ""),
+		},
+		{
+			NewDynamicSizeList(NewNumber(""), ""),
+			NewDynamicSizeList(NewString(""), ""),
 		},
 	} {
 		assert.Error(t, ts[0].Accept(ts[1]))

@@ -17,12 +17,12 @@ func TestFunctionAccept(t *testing.T) {
 			NewFunction([]Type{NewNumber("")}, NewNumber(""), ""),
 		},
 		{
-			NewFunction([]Type{NewNumber("")}, NewNumber(""), ""),
 			NewFunction([]Type{NewNumber("")}, NewVariable(""), ""),
+			NewFunction([]Type{NewNumber("")}, NewNumber(""), ""),
 		},
 		{
-			NewFunction([]Type{NewVariable("")}, NewNumber(""), ""),
 			NewFunction([]Type{NewVariable("")}, NewVariable(""), ""),
+			NewFunction([]Type{NewVariable("")}, NewNumber(""), ""),
 		},
 	} {
 		assert.Nil(t, ts[0].Accept(ts[1]))

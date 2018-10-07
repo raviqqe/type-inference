@@ -6,19 +6,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestObjectAccept(t *testing.T) {
+func TestMapObjectAccept(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{
 			NewMapObject(NewNumber(""), ""),
 			NewMapObject(NewNumber(""), ""),
 		},
 		{
-			NewMapObject(NewNumber(""), ""),
-			NewVariable(""),
-		},
-		{
-			NewMapObject(NewNumber(""), ""),
 			NewMapObject(NewVariable(""), ""),
+			NewMapObject(NewNumber(""), ""),
 		},
 		{
 			NewMapObject(NewNumber(""), ""),
@@ -29,8 +25,12 @@ func TestObjectAccept(t *testing.T) {
 	}
 }
 
-func TestObjectAcceptError(t *testing.T) {
+func TestMapObjectAcceptError(t *testing.T) {
 	for _, ts := range [][2]Type{
+		{
+			NewMapObject(NewString(""), ""),
+			NewNumber(""),
+		},
 		{
 			NewNumber(""),
 			NewMapObject(NewString(""), ""),

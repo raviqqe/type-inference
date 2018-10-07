@@ -10,7 +10,6 @@ func TestVariableAccept(t *testing.T) {
 	for _, ts := range [][2]Type{
 		{NewVariable(""), NewVariable("")},
 		{NewVariable(""), NewNumber("")},
-		{NewNumber(""), NewVariable("")},
 	} {
 		assert.Nil(t, ts[0].Accept(ts[1]))
 	}
