@@ -54,6 +54,11 @@ func TestUnionAccept(t *testing.T) {
 				"",
 			),
 		},
+		// TODO: Check all combinations of member types.
+		// {
+		// 	NewUnion([]Type{NewNumber(""), NewVariable("")}, ""),
+		// 	NewUnion([]Type{NewNumber(""), NewString("")}, ""),
+		// },
 	} {
 		assert.Nil(t, ts[0].Accept(ts[1]))
 	}
