@@ -18,8 +18,8 @@ func (o *MapObject) Accept(t Type) error {
 	if !ok {
 		return acceptUnion(o, t, "not an object")
 	} else if oo, ok := oo.(*RecordObject); ok {
-		for _, kv := range oo.keyValues {
-			if err := o.value.Accept(kv.value); err != nil {
+		for _, v := range oo.keyValues {
+			if err := o.value.Accept(v); err != nil {
 				return err
 			}
 		}
@@ -36,8 +36,8 @@ func (o *MapObject) CanAccept(t Type) bool {
 	case *MapObject:
 		return o.value.CanAccept(oo.value)
 	case *RecordObject:
-		for _, kv := range oo.keyValues {
-			if !o.value.CanAccept(kv.value) {
+		for _, v := range oo.keyValues {
+			if !o.value.CanAccept(v) {
 				return false
 			}
 		}
