@@ -35,7 +35,7 @@ func (o *RecordObject) Accept(t Type) error {
 }
 
 // CanAccept checks if a type is acceptable.
-func (o *RecordObject) CanAccept(t Type) bool {
+func (o RecordObject) CanAccept(t Type) bool {
 	oo, ok := t.(*RecordObject)
 
 	if !ok {

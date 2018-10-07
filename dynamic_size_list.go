@@ -49,8 +49,8 @@ func (l DynamicSizeList) CanAccept(t Type) bool {
 }
 
 // Location returns where the type is defined.
-func (l *DynamicSizeList) Location() string {
+func (l DynamicSizeList) Location() string {
 	return l.location
 }
 
-func (*DynamicSizeList) isList() {}
+func (DynamicSizeList) isList() {}

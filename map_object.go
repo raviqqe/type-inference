@@ -31,7 +31,7 @@ func (o *MapObject) Accept(t Type) error {
 }
 
 // CanAccept checks if a type is acceptable.
-func (o *MapObject) CanAccept(t Type) bool {
+func (o MapObject) CanAccept(t Type) bool {
 	switch oo := t.(type) {
 	case *MapObject:
 		return o.value.CanAccept(oo.value)
@@ -49,8 +49,8 @@ func (o *MapObject) CanAccept(t Type) bool {
 }
 
 // Location returns where the type is defined.
-func (o *MapObject) Location() string {
+func (o MapObject) Location() string {
 	return o.location
 }
 
-func (*MapObject) isObject() {}
+func (MapObject) isObject() {}

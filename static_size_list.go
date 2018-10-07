@@ -68,4 +68,4 @@ func (l StaticSizeList) Location() string {
 	return l.location
 }
 
-func (*StaticSizeList) isList() {}
+func (StaticSizeList) isList() {}
