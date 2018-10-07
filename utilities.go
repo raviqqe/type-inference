@@ -13,3 +13,19 @@ func acceptMany(ts, tts []Type, m, l string) error {
 
 	return nil
 }
+
+func acceptUnion(t, tt Type, m string) error {
+	u, ok := tt.(Union)
+
+	if !ok {
+		return newInferenceError(m, tt.Location())
+	}
+
+	for _, tt := range u.types {
+		if err := t.Accept(tt); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}

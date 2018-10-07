@@ -16,7 +16,7 @@ func (o *MapObject) Accept(t Type) error {
 	oo, ok := t.(Object)
 
 	if !ok {
-		return newInferenceError("not an object", t.Location())
+		return acceptUnion(o, t, "not an object")
 	} else if oo, ok := oo.(*RecordObject); ok {
 		for _, kv := range oo.keyValues {
 			if err := o.value.Accept(kv.value); err != nil {

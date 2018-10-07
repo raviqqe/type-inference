@@ -34,6 +34,26 @@ func TestUnionAccept(t *testing.T) {
 			NewUnion([]Type{NewNumber(""), NewString(""), NewNull("")}, ""),
 			NewUnion([]Type{NewNumber(""), NewString("")}, ""),
 		},
+		{
+			NewMapObject(NewNumber(""), ""),
+			NewUnion(
+				[]Type{
+					NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
+					NewRecordObject(map[string]Type{"bar": NewNumber("")}, ""),
+				},
+				"",
+			),
+		},
+		{
+			NewDynamicSizeList(NewNumber(""), ""),
+			NewUnion(
+				[]Type{
+					NewStaticSizeList([]Type{NewNumber("")}, ""),
+					NewStaticSizeList([]Type{NewNumber(""), NewNumber("")}, ""),
+				},
+				"",
+			),
+		},
 	} {
 		assert.Nil(t, ts[0].Accept(ts[1]))
 	}
@@ -54,6 +74,26 @@ func TestUnionAcceptError(t *testing.T) {
 		{
 			NewUnion([]Type{NewNumber(""), NewString("")}, ""),
 			NewUnion([]Type{NewNumber(""), NewString(""), NewNull("")}, ""),
+		},
+		{
+			NewMapObject(NewNumber(""), ""),
+			NewUnion(
+				[]Type{
+					NewRecordObject(map[string]Type{"foo": NewNumber("")}, ""),
+					NewRecordObject(map[string]Type{"bar": NewString("")}, ""),
+				},
+				"",
+			),
+		},
+		{
+			NewDynamicSizeList(NewNumber(""), ""),
+			NewUnion(
+				[]Type{
+					NewStaticSizeList([]Type{NewNumber("")}, ""),
+					NewStaticSizeList([]Type{NewNumber(""), NewString("")}, ""),
+				},
+				"",
+			),
 		},
 	} {
 		assert.NotNil(t, ts[0].Accept(ts[1]))
