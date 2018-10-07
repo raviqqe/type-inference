@@ -32,7 +32,7 @@ func (u Union) Accept(t Type) error {
 
 // CanAccept checks if a type is acceptable.
 func (Union) CanAccept(t Type) bool {
-	panic("unimplemented")
+	panic("unreachable") // because there are no nested unions
 }
 
 // Location returns where the type is defined.
