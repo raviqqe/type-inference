@@ -6,9 +6,9 @@ jobs:
     working_directory: /go/src/github.com/raviqqe/type-inference
     steps:
       - checkout
+      - run: go get -d -t ./...
       - run: go get -u github.com/alecthomas/gometalinter
       - run: gometalinter --install
-      - run: go get -d -t ./...
       - run: gometalinter ./...
       - run: go build
       - run: go test -covermode atomic -coverprofile coverage.txt -race
